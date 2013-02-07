@@ -753,6 +753,16 @@ class SearchQuerySetTestCase(TestCase):
         self.assertEqual(repr(sqs.query.query_filter.children[1]), repr(sqs2.query.query_filter))
 
 
+class LoadAllSQSTestCase(SearchQuerySetTestCase):
+    """
+    Run `SearchQuerySetTestCase` against a `SearchQuerySet` using `load_all()`.
+    """
+
+    def setUp(self):
+        super(LoadAllSQSTestCase, self).setUp()
+        self.msqs = self.msqs.load_all()
+
+
 class ValuesQuerySetTestCase(SearchQuerySetTestCase):
     def test_values_sqs(self):
         sqs = self.msqs.auto_query("test").values("id")
