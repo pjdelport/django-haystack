@@ -216,13 +216,14 @@ class SearchQuerySet(object):
             if self._load_all:
                 # We have to deal with integer keys being cast from strings
                 model_objects = loaded_objects.get(result.model, {})
-                if not result.pk in model_objects:
+                pk = result.pk
+                if not pk in model_objects:
                     try:
-                        result.pk = int(result.pk)
+                        pk = int(result.pk)
                     except ValueError:
                         pass
                 try:
-                    result._object = model_objects[result.pk]
+                    result._object = model_objects[pk]
                 except KeyError:
                     # The object was either deleted since we indexed or should
                     # be ignored; fail silently.
