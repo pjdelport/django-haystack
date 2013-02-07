@@ -763,6 +763,18 @@ class LoadAllSQSTestCase(SearchQuerySetTestCase):
         self.msqs = self.msqs.load_all()
 
 
+class MissingObjectSQSTestCase(SearchQuerySetTestCase):
+    """
+    Like `SearchQuerySetTestCase`, but delete an object beforehand.
+
+    This tests the robustness of missing object handling.
+    """
+
+    def setUp(self):
+        super(MissingObjectSQSTestCase, self).setUp()
+        MockModel.objects.get(pk=20).delete()
+
+
 class ValuesQuerySetTestCase(SearchQuerySetTestCase):
     def test_values_sqs(self):
         sqs = self.msqs.auto_query("test").values("id")
