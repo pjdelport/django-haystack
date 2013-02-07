@@ -775,6 +775,12 @@ class MissingObjectSQSTestCase(SearchQuerySetTestCase):
         MockModel.objects.get(pk=20).delete()
 
 
+class LoadAllMissingObjectSQSTestCase(LoadAllSQSTestCase, MissingObjectSQSTestCase):
+    """
+    Test using 'load_all()' when an object has been deleted.
+    """
+
+
 class ValuesQuerySetTestCase(SearchQuerySetTestCase):
     def test_values_sqs(self):
         sqs = self.msqs.auto_query("test").values("id")
